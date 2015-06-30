@@ -5,7 +5,8 @@ var gulp = require('gulp'),
     minify = require('gulp-minify-css'),
     preprocess = require('gulp-preprocess'),
     shell = require('gulp-shell'),
-    del = require('del')
+    del = require('del'),
+    ghpages = require('gulp-gh-pages')
 
 // Static server with proxy
 gulp.task('default', ['sass:watch', 'preprocess:watch'], function () {
@@ -21,7 +22,7 @@ gulp.task('default', ['sass:watch', 'preprocess:watch'], function () {
   })
 })
  
-gulp.task('sass', function () {
+gulp.task('sass', ['clean'], function () {
   gulp.src('./src/assets/sass/**/*.scss')
     .pipe(sass())
     .pipe(autoprefixer({ browsers: ['last 2 versions'] }))
@@ -44,27 +45,30 @@ gulp.task('preprocess:watch', ['preprocess'], function() {
   gulp.watch('./src/*.html', ['preprocess'])
 })
 
-gulp.task('copy', function() {
-  var files = [
-    './src/assets/**/*'
-  ]
+gulp.task('copy', ['clean'], function() {
+  var files = []
   gulp.src(files, { base: './src/' })
     .pipe(gulp.dest('./dist/'))
 })
 
-gulp.task('js', function() {
+gulp.task('js', ['clean'], function() {
   return gulp.src('')
     .pipe(shell([
-      'jspm bundle-sfx lib/main ./dist/assets/js/main.js --minify'
+      'jspm bundle-sfx src/assets/js/main ./dist/assets/js/main.js --minify'
     ]))
 })
 
-gulp.task('clean', function(cb) {
-  del(['./dist/**/*',], cb)
-})
-
-gulp.task('build', ['clean', 'sass', 'js', 'copy'], function() {
+gulp.task('build', ['sass', 'js', 'copy'], function() {
   gulp.src('./src/*.html')
     .pipe(preprocess({context: { NODE_ENV: 'production'}}))
     .pipe(gulp.dest('./dist/'))
-});
+})
+
+gulp.task('clean', function(cb) {
+  del(['./dist/**/*'], cb)
+})
+
+gulp.task('deploy', ['build'], function() {
+  return gulp.src('./dist/**/*')
+    .pipe(ghpages({force: true}))
+})
