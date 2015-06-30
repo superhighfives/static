@@ -12,6 +12,14 @@ You'll need Gulp and JSPM to get the beast running, along with a couple of Node 
 3. Initialise JPSM with `jspm install`
 4. Get the development node packages with `npm install`
 
-# Fire it up
+# Build and deploy
+
+Run `gulp build`, to build without deploying.
+
+That'll take your HTML, JS and CSS assets (compiled and minified and made classy) and move them into `/dist`.
+
+You can combine that step with deployment to Github Pages using `gulp-gh-pages`, using the `gulp deploy` command.
+
+# Fire it up locally
 
 Run `gulp`. Celebrate.
