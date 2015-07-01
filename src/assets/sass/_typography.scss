@@ -1,0 +1,24 @@
+%type-light {
+  font-weight: 300;
+}
+
+%type-regular {
+  font-weight: 400;
+}
+
+%type-medium {
+  font-weight: 600;
+}
+
+%type-upcase {
+  text-transform: uppercase;
+}
+
+%type-downcase {
+  text-transform: lowercase;
+}
+
+%type {
+  font-family: $font-stack;
+  font-size: 16px;
+}
