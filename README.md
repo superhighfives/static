@@ -23,3 +23,7 @@ You can combine that step with deployment to Github Pages using `gulp-gh-pages`,
 # Fire it up locally
 
 Run `gulp`. Celebrate.
+
+## Known issues
+
+- JS only builds when you start the server, cause of the `/src` to `/dist` build / watch step. If you can think of a good way around this, feel free to submit a pull request.
