@@ -14,7 +14,7 @@ gulp.task('default', ['build', 'watch'], function () {
     port: 8888,
     files: ["src/*.html", "src/lib/**"],
     server: {
-      baseDir: "./dist/"
+      baseDir: ["./dist", "./"]
     },
     open: false,
     notify: false,
@@ -24,7 +24,7 @@ gulp.task('default', ['build', 'watch'], function () {
 
 var generateSass = function () {
   return gulp.src('./src/assets/sass/**/*.scss')
-    .pipe(sass())
+    .pipe(sass().on('error', sass.logError))
     .pipe(autoprefixer({ browsers: ['last 2 versions'] }))
     .pipe(minify())
     .pipe(gulp.dest('./dist/assets/css'))
@@ -62,11 +62,11 @@ gulp.task('watch', ['build'], function() {
 gulp.task('js', ['clean'], function() {
   return gulp.src('')
     .pipe(shell([
-      'jspm bundle-sfx src/assets/js/main ./dist/assets/js/main.js --minify'
+      'jspm bundle-sfx src/lib/main ./dist/assets/js/main.js --minify'
     ]))
 })
 
-gulp.task('build', ['preprocess', 'sass', 'js', 'copy'])
+gulp.task('build', ['clean', 'preprocess', 'sass', 'js', 'copy'])
 
 gulp.task('clean', function(cb) {
   del(['./dist/**/*'], cb)

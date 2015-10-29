@@ -1,9 +1,19 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-size: 16px;
+}
+
 body {
   background: $background-color;
   color: $text-color;
-  @extend %type;
+  font-family: $font-stack;
   min-width: 320px;
-  font-size: 16px;
 }
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
@@ -15,6 +25,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: inherit;
   color: inherit;
   padding: 0;
+  font-size: 1em;
 }
 
 h1, h2, h3, h4, h5, h6, hgroup,
@@ -23,33 +34,18 @@ blockquote, p, address,
 table, fieldset,
 figure, pre {
   margin: 0;
-  margin-bottom: 24px;
 }
 
 hr {
-  margin: 24px 0;
   border-top: 2px solid $color-off-white;
 }
 
-p {
-  &.subtle {
-    color: $color-mid-grey;
-  }
-  &.last {
-    margin-bottom: 0;
-  }
-}
-
 a {
-  transition: color 0.3s, border-color 0.3s;
-  &:hover {
-    text-decoration: none;
-  }
-  &.link {
-    text-decoration: underline;
-    &:hover {
-      text-decoration: underline;
-    }
+  transition: color 0.3s;
+  text-decoration: underline;
+  color: inherit;
+  &:hover, &:focus, &:active {
+    color: inherit;
   }
 }
 
